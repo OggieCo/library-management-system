@@ -29,8 +29,8 @@ public class BookService {
     }
 
     //POST
-    public void addBook(Book book) {
-        bookRepo.save(book);
+    public Book addBook(Book book) {
+        return bookRepo.save(book);
     }
 
     //PUT

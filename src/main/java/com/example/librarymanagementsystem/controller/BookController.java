@@ -44,14 +44,17 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public ResponseEntity<String> addBook(@RequestBody Book book) {
+    public ResponseEntity<Book> addBook(@RequestBody Book book) {
         try {
-            bookService.addBook(book);
-            return new ResponseEntity<>("Added" ,HttpStatus.CREATED);
+            Book createdBook = bookService.addBook(book);
+            return new ResponseEntity<>(createdBook, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>("Error adding book", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PutMapping("/books/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookToUpdate) {
